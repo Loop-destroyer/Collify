@@ -1,0 +1,52 @@
+workspace "Name" "Description" {
+
+    !identifiers hierarchical
+
+    model {
+        u = person "College Aspirant"
+        ss = softwareSystem "Webpage Server" {
+            wa = container "Web Application"
+            pcc = container "profile creation component"
+            pec = container "profile editing component"
+            cdc = container "college details component"
+            cdec = container "college details extraction component"
+            mlc = container "ML component"
+            bpc = container "blog portal component"
+            pd = container "Profile database"{
+                tags "Database"
+            }
+            cd = container "college database"{
+                tags "Database"
+            }
+            bd = container "blogs database"{
+                tags "Database"
+            }
+        }
+
+        u -> ss "Uses"
+        u -> ss.wa "Uses"
+        ss.wa -> ss.pcc "If user creates a new profile"
+        ss.pcc -> ss.pec "If user edits their existing profile"
+        ss.wa -> ss.cdc "If user wants to browse college details"
+        ss.cdc -> ss.cdec "If user wants to view colleges according to their preferences"
+        ss.wa -> ss.bpc "If user wants to view blogs and other updates"
+        ss.pec -> ss.pd "Reads from and writes to"
+        ss.pcc -> ss.pd  "Reads from and writes to"
+        ss.cdc -> ss.cd  "Reads from and writes to"
+        ss.cdec -> ss.cd  "Reads from and writes to"
+        ss.mlc -> ss.cd  "Reads from and writes to"
+        ss.bpc -> ss.bd  "Reads from and writes to"
+    }
+
+    views {
+        systemContext ss "Diagram1" {
+            include *
+            autolayout lr
+        }
+    
+        container ss "Diagram2"{
+            include *
+            autolayout lr
+        }
+    }
+}
